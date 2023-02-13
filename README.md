@@ -12,10 +12,23 @@ Install using your favorite plugin manager ! Here with packer :
 
 ```lua
 use {
-    "lazytanuki/nvim-mapper",
+    "gregorias/nvim-mapper",
     config = function() require("nvim-mapper").setup{} end,
     before = "telescope.nvim"
 }
+```
+
+Here with [Lazy](https://github.com/folke/lazy.nvim):
+
+```lua
+return
+    ...
+{
+    "gregorias/nvim-mapper",
+    config = function() require("nvim-mapper").setup{} end,
+    before = "telescope.nvim"
+},
+    ...
 ```
 
 > Note that nvim-mapper needs to be one of the first plugins to load, if you want to use it to define your keymaps in the other plugins configuration functions.
