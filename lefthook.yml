@@ -4,6 +4,11 @@ commit-msg:
       run: "commitlint --edit={1}"
 pre-commit:
   commands:
+    luacheck:
+      tags: lint
+      files: git diff --name-only --cached --diff-filter=AM
+      glob: '*.lua'
+      run: luacheck {files}
     markdownlint:
       tags: documentation style
       files: git diff --name-only --cached --diff-filter=AM

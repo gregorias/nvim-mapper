@@ -10,6 +10,7 @@ This project requires the following tools:
 
 - [Commitlint]
 - [Lefthook]
+- [Luacheck]
 - [Markdownlint]
 
 Install Lefthook:
@@ -20,4 +21,5 @@ lefthook install
 
 [Commitlint]: https://github.com/conventional-changelog/commitlint
 [Lefthook]: https://github.com/evilmartians/lefthook
+[Luacheck]: https://github.com/mpeterv/luacheck
 [Markdownlint]: https://github.com/igorshubovych/markdownlint-cli
