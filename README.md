@@ -37,7 +37,7 @@ Install using your favorite plugin manager:
 > functions.
 
 Then in your Telescope config function, you may call the
-`load_extension("mapper")` function to load the Telescope extension, like so :
+`load_extension("mapper")` function to load the Telescope extension, like so:
 
 ```lua
 use {
