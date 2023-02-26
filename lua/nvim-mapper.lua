@@ -22,7 +22,7 @@ local function map(virtual, buffnr, mode, keys, cmd, options, category, unique_i
     buffer_only = buffer_only,
   }
 
-  maybe_existing_record = M.mapper_records[unique_identifier]
+  local maybe_existing_record = M.mapper_records[unique_identifier]
 
   if maybe_existing_record == nil then
     M.mapper_records[unique_identifier] = record

@@ -34,10 +34,12 @@ M.previewer = defaulter(function(_)
 
             -- Syntax colors
             for key, value in pairs(syntax_matches) do
-                vim.api.nvim_buf_call(self.state.bufnr, function() vim.cmd(":syntax match " .. key .. " \"" .. value .. "\"") end)
+                vim.api.nvim_buf_call(self.state.bufnr,
+                                      function() vim.cmd(":syntax match " .. key .. " \"" .. value .. "\"") end)
                 vim.api.nvim_buf_call(self.state.bufnr, function() vim.cmd(":hi link " .. key .. " Operator") end)
 
-                if (key == "nvim_mapper_keys" or key == "nvim_mapper_cmd" or key == "nvim_mapper_opts" or key == "nvim_mapper_id" or key == "nvim_mapper_definition") then
+                if (key == "nvim_mapper_keys" or key == "nvim_mapper_cmd" or key == "nvim_mapper_opts"
+                    or key == "nvim_mapper_id" or key == "nvim_mapper_definition") then
                     vim.api.nvim_buf_call(self.state.bufnr, function()
                         -- "\(^Definition: \+\)\@<=.*"
                         vim.cmd(":syntax match MapperCode '\\(" .. value .. ": \\+\\)\\@<=.*'")

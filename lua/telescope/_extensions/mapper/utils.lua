@@ -1,7 +1,67 @@
-local Path = require('plenary.path')
 local job = require("plenary.job")
 
 local M = {}
+
+-- Make the text that is displayed in the preview
+local function record_buf_lines(record)
+  local lines = {}
+
+  local modes = {}
+  local mode_str = ""
+
+  if (type(record.mode) == "table") then
+    modes = record.mode
+  else
+    table.insert(modes, record.mode)
+  end
+
+  for i, mode in ipairs(modes) do
+    if (i > 1) then
+      mode_str = mode_str .. ", "
+    end
+
+    if (mode == "n") then
+      mode_str = mode_str .. "normal"
+    elseif (mode == "i") then
+      mode_str = mode_str .. "insert"
+    elseif (mode == "v") then
+      mode_str = mode_str .. "visual"
+    elseif (mode == "t") then
+      mode_str = mode_str .. "terminal"
+    elseif (mode == "o") then
+      mode_str = mode_str .. "operator pending"
+    elseif (mode == "s") then
+      mode_str = mode_str .. "select"
+    elseif (mode == "r") then
+      mode_str = mode_str .. "replace"
+    else
+      mode_str = mode_str .. mode
+    end
+  end
+
+  local filename
+  local row
+  local cmd_str
+  if record.filename ~= nil then
+    filename = record.filename:gsub(vim.g.mapper_search_path .. "/", "")
+  else filename = ""
+  end
+  if record.row ~= nil then row = record.row else row = "" end
+  if type(record.cmd) == "function" then cmd_str = "function" else cmd_str = record.cmd end
+
+  table.insert(lines, "Id:           " .. record.unique_identifier)
+  table.insert(lines, "Category:     " .. record.category)
+  table.insert(lines, "Mode:         " .. mode_str)
+  table.insert(lines, "Keys:         " .. record.keys)
+  table.insert(lines, "Command:      " .. cmd_str)
+  table.insert(lines, "Buffer only:  " .. tostring(record.buffer_only))
+  table.insert(lines, "Options:      " .. vim.inspect(record.options):gsub("\n", ""):gsub("{  ", "{"):gsub("  ", " "))
+  table.insert(lines, "Definition:   " .. filename .. ":" .. row)
+  table.insert(lines, "")
+  table.insert(lines, record.description)
+
+  return lines
+end
 
 -- Fetches mapper information to be passed to picker
 M.get_mappers = function()
@@ -66,7 +126,7 @@ M.get_mappers = function()
 
   -- Create the mapping scratch buffers text
   for _, record in pairs(records) do
-    record.lines = Record_buf_lines(record)
+    record.lines = record_buf_lines(record)
   end
 
   -- Telescope wants an indexed array
@@ -84,64 +144,6 @@ M.get_mappers = function()
   end
 
   return indexed_records
-end
-
--- Make the text that is displayed in the preview
-function Record_buf_lines(record)
-  local lines = {}
-
-  local modes = {}
-  local mode_str = ""
-
-  if (type(record.mode) == "table") then
-    modes = record.mode
-  else
-    table.insert(modes, record.mode)
-  end
-
-  for i, mode in ipairs(modes) do
-    if (i > 1) then
-      mode_str = mode_str .. ", "
-    end
-
-    if (mode == "n") then
-      mode_str = mode_str .. "normal"
-    elseif (mode == "i") then
-      mode_str = mode_str .. "insert"
-    elseif (mode == "v") then
-      mode_str = mode_str .. "visual"
-    elseif (mode == "t") then
-      mode_str = mode_str .. "terminal"
-    elseif (mode == "o") then
-      mode_str = mode_str .. "operator pending"
-    elseif (mode == "s") then
-      mode_str = mode_str .. "select"
-    elseif (mode == "r") then
-      mode_str = mode_str .. "replace"
-    else
-      mode_str = mode_str .. mode
-    end
-  end
-
-  local filename
-  local row
-  local cmd_str
-  if record.filename ~= nil then filename = record.filename:gsub(vim.g.mapper_search_path .. "/", "") else filename = "" end
-  if record.row ~= nil then row = record.row else row = "" end
-  if type(record.cmd) == "function" then cmd_str = "function" else cmd_str = record.cmd end
-
-  table.insert(lines, "Id:           " .. record.unique_identifier)
-  table.insert(lines, "Category:     " .. record.category)
-  table.insert(lines, "Mode:         " .. mode_str)
-  table.insert(lines, "Keys:         " .. record.keys)
-  table.insert(lines, "Command:      " .. cmd_str)
-  table.insert(lines, "Buffer only:  " .. tostring(record.buffer_only))
-  table.insert(lines, "Options:      " .. vim.inspect(record.options):gsub("\n", ""):gsub("{  ", "{"):gsub("  ", " "))
-  table.insert(lines, "Definition:   " .. filename .. ":" .. row)
-  table.insert(lines, "")
-  table.insert(lines, record.description)
-
-  return lines
 end
 
 return M
