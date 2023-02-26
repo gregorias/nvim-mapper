@@ -1,10 +1,8 @@
 # 🗺️ Mapper
 
-This neovim plugin aims at helping you keep track of your keymaps.
-
-It is meant to work with [Telescope]. It helps you search for currently active
-keymaps, get info about them, and jump to their definition if you want to
-change them.
+This is a Neovim plugin that keeps track of your keymaps and exposes them
+through [Telescope]. You can search for currently active keymaps, get info
+about them, and jump to their definition.
 
 ![demo](https://user-images.githubusercontent.com/36456999/127230715-88411776-3ff1-40ca-85f9-4cad75f6d2cb.gif)
 
