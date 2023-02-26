@@ -32,7 +32,7 @@ Install using your favorite plugin manager:
     }
     ```
 
-> Note that nvim-mapper needs to be one of the first plugins to load, if you
+> Note that nvim-mapper needs to be one of the first plugins to load if you
 > want to use it to define your keymaps in the other plugins configuration
 > functions.
 
