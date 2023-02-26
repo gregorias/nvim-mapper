@@ -1,3 +1,5 @@
+# 🗺️ Mapper
+
 This neovim plugin aims at helping you keep track of your keymaps.
 
 It is meant to work with the [telescope](https://github.com/nvim-telescope/telescope.nvim) plugin.
