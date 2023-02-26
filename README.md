@@ -27,7 +27,7 @@ Install using your favorite plugin manager:
 
     ```lua
     use { "gregorias/nvim-mapper",
-      config = function() require("nvim-mapper").setup{} end,
+      config = function() require"nvim-mapper".setup{} end,
       before = "telescope.nvim",
     }
     ```
