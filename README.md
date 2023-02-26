@@ -13,14 +13,18 @@ To use this plugin, you need to have **[ripgrep]**.
 ## 📦 Installation
 
 Install using your favorite plugin manager:
+
 - [Lazy]
+
     ```lua
     { "gregorias/nvim-mapper",
       dependencies = "nvim-telescope/telescope.nvim",
       config = function() require"nvim-mapper".setup{} end,
     },
     ```
+
 - [Packer]
+
     ```lua
     use { "gregorias/nvim-mapper",
       config = function() require("nvim-mapper").setup{} end,
@@ -60,17 +64,13 @@ require("nvim-mapper").setup({
 })
 ```
 
-Usage
-=====
+## 🚀 Usage
 
-Defining your keymaps with nvim-mapper
---------------------------------------
+To use this plugin, you need to define your keymaps with Mapper functions
+instead of stock functions.
 
-To use this plugin, you need to define your keymaps with `nvim-mapper`
-functions instead of stock functions.
-
-Defining a keymap with nvim-mapper is pretty much the same as with the stock
-lua function, except that some additional info is required :
+Defining a keymap with Mapper is pretty much the same as with the stock lua
+function except that some additional info is required.
 
 ### Global keymaps
 
@@ -183,8 +183,7 @@ function M.treesitter_text_objects()
 end
 ```
 
-Looking for keymaps
--------------------
+### Looking for keymaps
 
 The default keymap to open the Telescope extension is `<leader>MM`.
 
@@ -193,8 +192,7 @@ The command would be `:Telescope mapper`.
 You can jump to the keymap definition by using your own Telescope keymaps (open
 in new tab, in split, ...)
 
-Prevent issues when module is not installed
--------------------------------------------
+### Prevent issues when module is not installed
 
 To avoid having a non-functional config when the module is not currently
 installed, place this file somewhere in your `lua` folder :
@@ -263,8 +261,7 @@ Mapper = require(<path to previous file>)
 Mapper.map(...)
 ```
 
-Credits
-=======
+## 🙏 Credits
 
 Huge thanks to the Neovim team for the awesome work! 😋
 
