@@ -33,7 +33,7 @@ Install using your favorite plugin manager:
     ```
 
 > Note that nvim-mapper needs to be one of the first plugins to load if you
-> want to use it to define your keymaps in the other plugins configuration
+> want to use it to define your keymaps in other plugins' configuration
 > functions.
 
 Then in your Telescope config function, you may call the
