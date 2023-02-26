@@ -6,31 +6,27 @@ about them, and jump to their definition.
 
 ![demo](https://user-images.githubusercontent.com/36456999/127230715-88411776-3ff1-40ca-85f9-4cad75f6d2cb.gif)
 
-Installation
-============
+## ⚡️ Requirements
 
-Install using your favorite plugin manager ! Here with packer :
+To use this plugin, you need to have **[ripgrep]**.
 
-```lua
-use {
-    "gregorias/nvim-mapper",
-    config = function() require("nvim-mapper").setup{} end,
-    before = "telescope.nvim"
-}
-```
+## 📦 Installation
 
-Here with [Lazy](https://github.com/folke/lazy.nvim):
-
-```lua
-return
-    ...
-{
-    "gregorias/nvim-mapper",
-    config = function() require("nvim-mapper").setup{} end,
-    before = "telescope.nvim"
-},
-    ...
-```
+Install using your favorite plugin manager:
+- [Lazy]
+    ```lua
+    { "gregorias/nvim-mapper",
+      dependencies = "nvim-telescope/telescope.nvim",
+      config = function() require"nvim-mapper".setup{} end,
+    },
+    ```
+- [Packer]
+    ```lua
+    use { "gregorias/nvim-mapper",
+      config = function() require("nvim-mapper").setup{} end,
+      before = "telescope.nvim",
+    }
+    ```
 
 > Note that nvim-mapper needs to be one of the first plugins to load, if you
 > want to use it to define your keymaps in the other plugins configuration
@@ -63,11 +59,6 @@ require("nvim-mapper").setup({
     action_on_enter = "definition",
 })
 ```
-
-Requirements
-------------
-
-To use this plugin, you need to have **ripgrep** installed.
 
 Usage
 =====
@@ -284,4 +275,7 @@ Also, thanks to:
   [telescope-project](https://github.com/nvim-telescope/telescope-project.nvim)
   plugin, which code I used to understand the Telescope API
 
+[Lazy]: https://github.com/folke/lazy.nvim
+[Packer]: https://github.com/wbthomason/packer.nvim
+[ripgrep]: https://github.com/BurntSushi/ripgrep
 [Telescope]: https://github.com/nvim-telescope/telescope.nvim
