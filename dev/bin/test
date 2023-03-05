@@ -1,0 +1,41 @@
+#!/usr/bin/env fish
+
+# Check prerequisites
+if not type -q rg
+    echo "ERROR: Ripgrep (rg) is not installed." >&2
+    exit 1
+end
+
+if not type -q nvim
+    echo "ERROR: Neovim (nvim) is not installed." >&2
+    exit 1
+end
+
+# Prepare a sandbox environment
+set SANDBOX_ROOT (mktemp -d)
+set -x XDG_DATA_HOME "$SANDBOX_ROOT/.local/share"
+mkdir -p $XDG_DATA_HOME
+set -x XDG_CONFIG_HOME "$SANDBOX_ROOT/.config"
+mkdir -p "$XDG_CONFIG_HOME/nvim"
+set -x XDG_STATE_HOME "$SANDBOX_ROOT/.local/state"
+mkdir -p $XDG_STATE_HOME
+
+mkdir -p "$XDG_DATA_HOME/nvim/site/pack/vendor/start"
+
+# Fetch and install required plugins
+set LOCAL_CACHE .cache
+mkdir -p "$LOCAL_CACHE"
+if [ ! -e "$LOCAL_CACHE/plenary.nvim" ]
+    git clone --depth 1 https://github.com/nvim-lua/plenary.nvim "$LOCAL_CACHE/plenary.nvim"
+end
+if [ ! -e "$LOCAL_CACHE/telescope.nvim" ]
+    git clone --depth 1 https://github.com/nvim-telescope/telescope.nvim "$LOCAL_CACHE/telescope.nvim"
+end
+ln -s (readlink -f "$LOCAL_CACHE/plenary.nvim") "$XDG_DATA_HOME/nvim/site/pack/vendor/start/plenary.nvim"
+ln -s (readlink -f "$LOCAL_CACHE/telescope.nvim") "$XDG_DATA_HOME/nvim/site/pack/vendor/start/telescope.nvim"
+
+# Fetch and install Mapper
+mkdir -p "$XDG_DATA_HOME/nvim/site/pack/vendor/start/nvim-mapper"
+ln -s (readlink -f ./lua) "$XDG_DATA_HOME/nvim/site/pack/vendor/start/nvim-mapper/lua"
+
+nvim --headless -u tests/init.lua -c "PlenaryBustedDirectory tests { minimal_init = './tests/init.lua' }"
