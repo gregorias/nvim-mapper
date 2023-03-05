@@ -46,3 +46,27 @@ jobs:
           export VIM="${PWD}/_neovim/share/nvim/runtime"
           nvim --version
           nvim --headless -u tests/init.lua -c "PlenaryBustedDirectory tests { minimal_init = './tests/init.lua' }"
+  windows-tests:
+    name: windows tests
+    runs-on: windows-latest
+    strategy:
+      fail-fast: false
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install Neovim
+        run: |
+          C:\msys64\usr\bin\wget.exe -q https://github.com/neovim/neovim/releases/download/v0.8.3/nvim-win64.zip
+          7z x nvim-win64.zip
+          Add-Content $env:GITHUB_PATH ".\nvim-win64\bin\"
+      - uses: actions/checkout@v3
+        with:
+          repository: 'nvim-telescope/telescope.nvim'
+          path: 'telescope.nvim'
+      - name: Install telescope
+        run: 'Xcopy telescope.nvim %HOMEDRIVE%%HOMEPATH%\AppData\Local\nvim-data\site\pack\vendor\start\telescope.nvim\'
+      - name: Run test
+        run: |
+          dir %HOMEDRIVE%%HOMEPATH%\AppData\Local\nvim-data\site\pack\vendor\start
+          dir %HOMEDRIVE%%HOMEPATH%\AppData\Local\nvim-data\site\pack\vendor\start\telescope.nvim
+          nvim --version
+          nvim --headless -u tests/init.lua -c "PlenaryBustedDirectory tests { minimal_init = './tests/init.lua' }"
