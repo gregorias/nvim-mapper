@@ -9,3 +9,6 @@ pre-commit:
       files: git diff --name-only --cached --diff-filter=AM
       glob: '*.md'
       run: markdownlint {files}
+    test:
+      tags: test
+      run: dev/bin/test
